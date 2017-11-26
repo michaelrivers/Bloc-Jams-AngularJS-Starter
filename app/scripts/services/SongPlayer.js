@@ -29,15 +29,31 @@
               currentSong = song;
           };
 
+          /**
+           * @function playSong
+           * @desc Plays currentBuzzObject.play() and sets the play property of song to true
+           */
+          var playSong = function() {
+              if(currentBuzzObject) {
+                  currentBuzzObject.play();
+                  currentSong.playing = true;
+              }
+
+          };
+
+          /**
+           * @function SongPlayer.play
+           * @desc Checks for a currentSong, If  currentSong is not playing it will run setSong function. if currentSong exists it will be paused.
+           * @param {Object} song
+           */
           SongPlayer.play = function(song) {
               if (currentSong !== song) {
 
               setSong(song);
-              currentBuzzObject.play();
-              song.playing = true;
+              playSong();
           }else if (currentSong === song) {
               if (currentBuzzObject.isPaused()) {
-                  currentBuzzObject.play();
+                 playSong();
               }
           }
         };
@@ -49,8 +65,6 @@
 
           return SongPlayer;
      }
-
-
 
      angular
          .module('blocJams')
