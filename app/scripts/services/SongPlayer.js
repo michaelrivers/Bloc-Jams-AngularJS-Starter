@@ -21,8 +21,9 @@
            */
           var setSong = function(song) {
               if (currentBuzzObject) {
-                  currentBuzzObject.stop();
-                  SongPlayer.currentSong.playing = null;
+                  stopSong();
+                  //currentBuzzObject.stop();
+                  //SongPlayer.currentSong.playing = null;
               }
 
               currentBuzzObject = new buzz.sound(song.audioUrl, {
@@ -91,8 +92,9 @@
              * @desc If currentSongIndex is less than 0, stop the currently playing song and set value of currently playing song to the first song.
              */
             if (currentSongIndex < 0) {
-                currentBuzzObject.stop();
-                SongPlayer.currentSong.playing = null;
+                stopSong();
+                //currentBuzzObject.stop();
+                //SongPlayer.currentSong.playing = null;
             } else {
                 var song = currentAlbum.songs[currentSongIndex];
                 setSong(song);
@@ -100,7 +102,30 @@
             }
           };
 
-          return SongPlayer;
+          /**
+           * @function SongPlayer.next
+           * @desc uses getSongIndex function to get the index of the currently playing song and then increase that index by one.
+           */
+        SongPlayer.next = function() {
+        var currentSongIndex = getSongIndex(SongPlayer.currentSong);
+            currentSongIndex++;
+
+            if (currentSongIndex >= currentAlbum.songs.length) {
+                stopSong();
+                //currentBuzzObject.stop();
+                //SongPlayer.currentSong.playing = null;
+            } else {
+                var song = currentAlbum.songs[currentSongIndex];
+                setSong(song);
+                playSong(song);
+            }
+        }
+
+        var stopSong = function() {
+            currentBuzzObject.stop();
+            SongPlayer.currentSong.playing = null;
+        }
+        return SongPlayer;
      }
 
      angular
