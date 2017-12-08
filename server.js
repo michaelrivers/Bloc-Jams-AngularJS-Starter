@@ -7,14 +7,13 @@ let connection = {
     host: process.env.IP || 'localhost'
 };
 
-let routes = [
-    {
+let routes = [{
         method: 'GET',
         path: '/scripts/{path*}',
         handler: {
             directory: {
                 path: Path.join(__dirname, '/app/scripts')
-              }
+            }
         }
     },
     {
@@ -23,7 +22,7 @@ let routes = [
         handler: {
             directory: {
                 path: Path.join(__dirname, '/app/styles')
-              }
+            }
         }
     },
     {
@@ -32,7 +31,7 @@ let routes = [
         handler: {
             directory: {
                 path: Path.join(__dirname, '/app/assets')
-              }
+            }
         }
     },
     {
@@ -41,7 +40,7 @@ let routes = [
         handler: {
             directory: {
                 path: Path.join(__dirname, '/app/templates')
-              }
+            }
         }
     },
     {
@@ -68,8 +67,8 @@ server.start(() => {
     console.log('Server started at: ' + server.info.uri);
 });
 
-server.on('response', function (request) {
-    if(request.url.path.includes('templates')) {
+server.on('response', function(request) {
+    if (request.url.path.includes('templates')) {
         console.log();
         console.log(new Date().toString() + ':  ' + request.method.toUpperCase() + ' - ' + request.url.path + ' - (' + request.response.statusCode + ')');
     }
